@@ -9,5 +9,5 @@ This App Uses Environement variables in it. Refer to `config/custom-environment-
 
 ### Authors
 
-Rizwan Amjad [Github](https://github.com/RizwanAmjad)
-Muhammad Ahsan [Github](https://github.com/Muhammad-Ahsan-p)
+1. Rizwan Amjad [Github](https://github.com/RizwanAmjad)
+2. Muhammad Ahsan [Github](https://github.com/Muhammad-Ahsan-p)

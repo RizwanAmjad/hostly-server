@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
 
   // if we reach upto this point this means that user is valid
   const token = user.generateAuthToken();
-  res.send(token);
+  res.status(200).send(token);
 });
 
 function validate(user) {
