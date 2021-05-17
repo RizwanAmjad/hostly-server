@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.post("/", auth, async (req, res) => {
   // validate the request body
+
+  req.body.user = req.user._id;
   const result = validateHostel(req.body);
   console.log(result);
   if (result.error) {

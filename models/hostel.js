@@ -1,3 +1,4 @@
+const { string } = require("joi");
 const Joi = require("joi");
 const mongoose = require("mongoose");
 
@@ -7,8 +8,8 @@ const HostelSchema = mongoose.Schema({
   address: { type: String, required: true },
   room_price: { type: Number, required: true },
   available_rooms: { type: Number, required: true },
-  // TODO: Images
 
+  images: { type: Array },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -26,9 +27,9 @@ function validateHostel(hostel) {
     description: Joi.string().required(),
     address: Joi.string().required(),
     room_price: Joi.number().required(),
+    images: Joi.array().items(Joi.string()),
     available_rooms: Joi.number().required(),
     user: Joi.string().required(),
-
     city: Joi.string().required(),
   });
 
