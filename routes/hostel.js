@@ -22,7 +22,7 @@ router.post("/", auth, async (req, res) => {
 
 router.get("/", async (req, res) => {
   const hostels = await Hostel.find().populate(["user", "city"]);
-  res.send(hostels);
+  res.send(hostels.reverse());
 });
 
 router.get("/:id", async (req, res) => {

@@ -4,10 +4,17 @@ const bcrypt = require("bcrypt");
 const express = require("express");
 const router = express.Router();
 const { validate, User } = require("../models/users");
+const { route } = require("./messages");
 
 router.post("/me", auth, async (req, res) => {
   const user = await User.findById(req.user._id).select("-password");
   res.send(user);
+});
+
+router.get("/", auth, async (req, res) => {
+  let users = await User.find();
+  users = users.filter((user) => user._id != req.user._id);
+  res.send(users);
 });
 
 router.post("/", async (req, res) => {

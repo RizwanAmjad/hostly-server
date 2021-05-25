@@ -22,8 +22,9 @@ const Message = mongoose.model("Message", MessageSchema);
 // Joi Validation
 function validateMessage(message) {
   const schema = Joi.object({
-    follower_id: Joi.string().required(),
-    following_id: Joi.string().required(),
+    message_body: Joi.string().required(),
+    sender_user: Joi.string().required(),
+    reciever_user: Joi.string().required(),
   });
 
   return schema.validate(message);

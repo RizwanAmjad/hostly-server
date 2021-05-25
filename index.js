@@ -10,8 +10,11 @@ const hostels = require("./routes/hostel");
 const cities = require("./routes/cities");
 const auth = require("./routes/auth");
 const upload = require("./routes/upload");
+const messages = require("./routes/messages");
 
 const app = express();
+
+const socket = require("socket.io");
 
 // check environment variables
 if (!config.get("jwtPrivateKey")) {
@@ -28,6 +31,9 @@ mongoose
   .then((value) => console.log("Connected to DB..."))
   .catch((err) => console.log("Error Connecting to DB..."));
 
+// use static for images
+app.use("/images", express.static("public/images"));
+
 // middleware functions
 app.use(express.json());
 app.use(cors());
@@ -40,7 +46,24 @@ app.use("/api/hostels/", hostels);
 app.use("/api/cities", cities);
 app.use("/api/auth", auth);
 app.use("/api/upload", upload);
+app.use("/api/messages", messages);
 
 // listen to port
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Listening to port ${port}`));
+const server = app.listen(port, () => console.log(`Listening to port ${port}`));
+const io = socket(server);
+
+io.on("connection", (socket) => {
+  console.log("Client has been connected...", socket.id);
+  // socket.on("chat", (data) => {
+  //   io.sockets.emit("chat", data);
+  //   console.log(data);
+  // });
+});
+
+// app.use(function (req, res, next) {
+//   req.io = io;
+//   next();
+// });
+
+global.io = io;
