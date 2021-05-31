@@ -55,15 +55,6 @@ const io = socket(server);
 
 io.on("connection", (socket) => {
   console.log("Client has been connected...", socket.id);
-  // socket.on("chat", (data) => {
-  //   io.sockets.emit("chat", data);
-  //   console.log(data);
-  // });
 });
-
-// app.use(function (req, res, next) {
-//   req.io = io;
-//   next();
-// });
 
 global.io = io;

@@ -36,25 +36,6 @@ router.get("/", auth, async (req, res) => {
 router.get("/chats", auth, async (req, res) => {
   const id = req.user._id;
 
-  // let chats = await Message.aggregate([
-  //   {
-  //     $project: { sender_user: "$sender_user", message_body: "$message_body" },
-  //   },
-  //   { $sort: { _id: -1 } },
-  //   {
-  //     $group: {
-  //       _id: { sender_user: "$sender_user" },
-  //       sender_user: { $first: "$sender_user" },
-  //       message_body: { $first: "$message_body" },
-  //     },
-  //   },
-  // ]);
-  // await (
-  //   await Message.populate(chats, { path: "sender_user" })
-  // ).filter((message) => {
-  //   message.sender_user != id;
-  // });
-
   let chats = await Message.find({
     $or: [
       {
@@ -67,11 +48,6 @@ router.get("/chats", auth, async (req, res) => {
   }).populate(["sender_user"]);
 
   chats = chats.filter((chat) => chat.reciever_user == id);
-
-  // chats = _.sortedUniqBy({ chats }, function (e) {
-  //   e.sender_user._id;
-  // });
-
   res.send(chats);
 });
 
