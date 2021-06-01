@@ -22,9 +22,11 @@ if (!config.get("jwtPrivateKey")) {
   process.exit(1);
 }
 
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/hostly";
+
 // connect to the database
 mongoose
-  .connect("mongodb://localhost/hostly", {
+  .connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
