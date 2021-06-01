@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const config = require("config");
 const cors = require("cors");
+const compression = require("compression");
 
 const users = require("./routes/users");
 const hostels = require("./routes/hostel");
@@ -40,6 +41,7 @@ app.use("/images", express.static("public/images"));
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
+app.use(compression());
 app.get("env") === "development" && app.use(morgan("tiny"));
 
 // requests area
