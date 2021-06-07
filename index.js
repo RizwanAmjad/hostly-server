@@ -12,10 +12,12 @@ const cities = require("./routes/cities");
 const auth = require("./routes/auth");
 const upload = require("./routes/upload");
 const messages = require("./routes/messages");
+const logs = require("./routes/logs");
 
 const app = express();
 
 const socket = require("socket.io");
+const admin = require("./routes/adminAuth");
 
 // check environment variables
 if (!config.get("jwtPrivateKey")) {
@@ -51,6 +53,8 @@ app.use("/api/cities", cities);
 app.use("/api/auth", auth);
 app.use("/api/upload", upload);
 app.use("/api/messages", messages);
+app.use("/api/admin", admin);
+app.use("/api/logs", logs);
 
 // listen to port
 const port = process.env.PORT || 3000;

@@ -2,12 +2,10 @@ const express = require("express");
 
 const { validateCity, City } = require("../models/cities");
 
-const auth = require("../middleware/auth");
+const adminAuth = require("../middleware/adminAuth");
 const router = express.Router();
 
-router.use(auth);
-
-router.post("/", async (req, res) => {
+router.post("/", adminAuth, async (req, res) => {
   const result = validateCity(req.body);
 
   if (result.error) {
@@ -42,7 +40,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", adminAuth, async (req, res) => {
   const id = req.params.id;
 
   const result = validateCity(req.body);
@@ -61,7 +59,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", adminAuth, async (req, res) => {
   const id = req.params.id;
 
   try {
