@@ -59,7 +59,12 @@ app.use("/api/logs", logs);
 // listen to port
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => console.log(`Listening to port ${port}`));
-const io = socket(server);
+const io = socket(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+});
 
 io.on("connection", (socket) => {
   console.log("Client has been connected...", socket.id);
