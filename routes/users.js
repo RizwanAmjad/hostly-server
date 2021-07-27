@@ -5,6 +5,7 @@ const express = require("express");
 const router = express.Router();
 const { validate, User } = require("../models/users");
 const { route } = require("./messages");
+const RegisterationLog = require("../models/logs/registerLog");
 
 router.post("/me", auth, async (req, res) => {
   const user = await User.findById(req.user._id).select("-password");
@@ -38,6 +39,11 @@ router.post("/", async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
   await user.save();
+
+  // create registeration log
+  registerationLog = new RegisterationLog({ user: user._id });
+  registerationLog.save();
+
   user = _.pick(user, ["_id", "name", "email", "phone_number"]);
   res.send(user);
 });

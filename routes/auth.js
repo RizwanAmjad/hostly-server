@@ -4,6 +4,7 @@ const Joi = require("joi");
 const express = require("express");
 const router = express.Router();
 const { User } = require("../models/users");
+const LoginLog = require("../models/logs/loginLogs");
 
 router.post("/", async (req, res) => {
   // validate the request body
@@ -12,7 +13,7 @@ router.post("/", async (req, res) => {
     return res.status(400).send(result.error);
   }
 
-  // make sure user is not already registered
+  // make sure user is registered
   let user = await User.findOne({
     email: req.body.email,
   });
@@ -23,6 +24,11 @@ router.post("/", async (req, res) => {
 
   // if we reach upto this point this means that user is valid
   const token = user.generateAuthToken();
+
+  // create login log
+  loginLog = new LoginLog({ user: user._id });
+  loginLog.save();
+
   res.status(200).send(token);
 });
 
